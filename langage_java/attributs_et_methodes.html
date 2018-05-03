@@ -226,7 +226,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#methodes-de-classe">Méthodes de classe</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#redefinition-de-methode-overloading">Redéfinition de méthode : overloading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#surcharge-de-methode-overloading">Surcharge de méthode : overloading</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#portee-des-noms-et-this">Portée des noms et this</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#principe-d-encapsulation">Principe d’encapsulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#exercice">Exercice</a></li>
@@ -276,7 +276,7 @@
 <li class="toctree-l1"><a class="reference internal" href="polymorphisme.html">Le polymorphisme</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="polymorphisme.html#principe-du-polymorphisme">Principe du polymorphisme</a></li>
 <li class="toctree-l2"><a class="reference internal" href="polymorphisme.html#une-exception-les-methodes-privees">Une exception : les méthodes privées</a></li>
-<li class="toctree-l2"><a class="reference internal" href="polymorphisme.html#surcharge-et-signature-de-methode">Surcharge et signature de méthode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="polymorphisme.html#redefinition-et-signature-de-methode">Redéfinition et signature de méthode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="polymorphisme.html#le-mot-cle-super">Le mot-clé super</a></li>
 <li class="toctree-l2"><a class="reference internal" href="polymorphisme.html#l-annotation-override">L’annotation &#64;Override</a></li>
 <li class="toctree-l2"><a class="reference internal" href="polymorphisme.html#les-methodes-de-classe">Les méthodes de classe</a></li>
@@ -600,6 +600,21 @@
 <li class="toctree-l2"><a class="reference internal" href="../javaee_web/jsf.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../javaee_web/jsf.html#les-requetes-ajax">Les requêtes Ajax</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../javaee_web/jsf.html#pour-aller-plus-loin">Pour aller plus loin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../javaee_web/jaxrs.html">Les API Web avec JAX-RS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../javaee_web/jaxrs.html#la-notion-de-ressource">La notion de ressource</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../javaee_web/jaxrs.html#configurer-une-application-web-pour-jax-rs">Configurer une application Web pour JAX-RS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../javaee_web/jaxrs.html#implementer-des-ressources-avec-jax-rs">Implémenter des ressources avec JAX-RS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../javaee_web/jaxrs.html#les-annotations-de-methodes">Les annotations de méthodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../javaee_web/jaxrs.html#parametre-dans-le-chemin-d-uri">Paramètre dans le chemin d’URI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../javaee_web/jaxrs.html#data-binding">Data binding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../javaee_web/jaxrs.html#generer-une-reponse">Générer une réponse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../javaee_web/jaxrs.html#gerer-des-exceptions">Gérer des exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../javaee_web/jaxrs.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../javaee_web/jaxrs.html#implementer-un-client-http">Implémenter un client HTTP</a></li>
 </ul>
 </li>
 </ul>
@@ -1378,15 +1393,15 @@ au programme <strong>java</strong> après le nom de la classe :</p>
 </div>
 </div>
 </div>
-<div class="section" id="redefinition-de-methode-overloading">
-<h2>Redéfinition de méthode : overloading<a class="headerlink" href="#redefinition-de-methode-overloading" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="section" id="surcharge-de-methode-overloading">
+<h2>Surcharge de méthode : overloading<a class="headerlink" href="#surcharge-de-methode-overloading" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Il est possible de déclarer dans une classe plusieurs méthodes ayant le même nom.
 Ces méthodes doivent obligatoirement avoir des paramètres différents (le type et/ou le nombre).
 Il est également possible de déclarer des types de retour différents pour ces méthodes.
-On parle de redéfinition de méthode (<strong>method overloading</strong>). La redéfinition
+On parle de surcharge de méthode (<strong>method overloading</strong>). La surcharge
 de méthode n’a réellement de sens que si les méthodes portant le même nom ont un
 comportement que l’utilisateur de la classe jugera proche. Java permet
-également la redéfinition de méthode de classe.</p>
+également la surcharge de méthode de classe.</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Calculatrice</span> <span class="o">{</span>
 
   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">additionner</span><span class="o">(</span><span class="kt">int</span><span class="o">...</span> <span class="n">valeurs</span><span class="o">)</span> <span class="o">{</span>
@@ -1407,7 +1422,7 @@ comportement que l’utilisateur de la classe jugera proche. Java permet
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>Dans l’exemple ci-dessus, la redéfinition de méthode permet supporter l’addition
+<p>Dans l’exemple ci-dessus, la surcharge de méthode permet supporter l’addition
 pour le type entier et pour le type à virgule flottante. Selon le type de paramètre
 passé à l’appel, le compilateur déterminera laquelle des deux méthodes doit
 être appelée.</p>
@@ -1417,11 +1432,11 @@ passé à l’appel, le compilateur déterminera laquelle des deux méthodes doi
 </div>
 <div class="admonition caution">
 <p class="first admonition-title">Prudence</p>
-<p class="last">N’utilisez pas la redéfinition de méthode pour implémenter des méthodes qui
+<p class="last">N’utilisez pas la surcharge de méthode pour implémenter des méthodes qui
 ont des comportements trop différents. Cela rendra vos objets difficiles à
 comprendre et donc à utiliser.</p>
 </div>
-<p>Si on redéfinit une méthode avec un paramètre variable, cela peut créer une
+<p>Si on surcharge une méthode avec un paramètre variable, cela peut créer une
 ambiguïté de choix. Par exemple :</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Calculatrice</span> <span class="o">{</span>
 

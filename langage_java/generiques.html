@@ -226,7 +226,7 @@
 <li class="toctree-l3"><a class="reference internal" href="attributs_et_methodes.html#methodes-de-classe">Méthodes de classe</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="attributs_et_methodes.html#redefinition-de-methode-overloading">Redéfinition de méthode : overloading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="attributs_et_methodes.html#surcharge-de-methode-overloading">Surcharge de méthode : overloading</a></li>
 <li class="toctree-l2"><a class="reference internal" href="attributs_et_methodes.html#portee-des-noms-et-this">Portée des noms et this</a></li>
 <li class="toctree-l2"><a class="reference internal" href="attributs_et_methodes.html#principe-d-encapsulation">Principe d’encapsulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="attributs_et_methodes.html#exercice">Exercice</a></li>
@@ -276,7 +276,7 @@
 <li class="toctree-l1"><a class="reference internal" href="polymorphisme.html">Le polymorphisme</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="polymorphisme.html#principe-du-polymorphisme">Principe du polymorphisme</a></li>
 <li class="toctree-l2"><a class="reference internal" href="polymorphisme.html#une-exception-les-methodes-privees">Une exception : les méthodes privées</a></li>
-<li class="toctree-l2"><a class="reference internal" href="polymorphisme.html#surcharge-et-signature-de-methode">Surcharge et signature de méthode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="polymorphisme.html#redefinition-et-signature-de-methode">Redéfinition et signature de méthode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="polymorphisme.html#le-mot-cle-super">Le mot-clé super</a></li>
 <li class="toctree-l2"><a class="reference internal" href="polymorphisme.html#l-annotation-override">L’annotation &#64;Override</a></li>
 <li class="toctree-l2"><a class="reference internal" href="polymorphisme.html#les-methodes-de-classe">Les méthodes de classe</a></li>
@@ -600,6 +600,21 @@
 <li class="toctree-l2"><a class="reference internal" href="../javaee_web/jsf.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../javaee_web/jsf.html#les-requetes-ajax">Les requêtes Ajax</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../javaee_web/jsf.html#pour-aller-plus-loin">Pour aller plus loin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../javaee_web/jaxrs.html">Les API Web avec JAX-RS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../javaee_web/jaxrs.html#la-notion-de-ressource">La notion de ressource</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../javaee_web/jaxrs.html#configurer-une-application-web-pour-jax-rs">Configurer une application Web pour JAX-RS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../javaee_web/jaxrs.html#implementer-des-ressources-avec-jax-rs">Implémenter des ressources avec JAX-RS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../javaee_web/jaxrs.html#les-annotations-de-methodes">Les annotations de méthodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../javaee_web/jaxrs.html#parametre-dans-le-chemin-d-uri">Paramètre dans le chemin d’URI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../javaee_web/jaxrs.html#data-binding">Data binding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../javaee_web/jaxrs.html#generer-une-reponse">Générer une réponse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../javaee_web/jaxrs.html#gerer-des-exceptions">Gérer des exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../javaee_web/jaxrs.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../javaee_web/jaxrs.html#implementer-un-client-http">Implémenter un client HTTP</a></li>
 </ul>
 </li>
 </ul>
@@ -1147,7 +1162,7 @@ rencontrer quelques problèmes lors de l’utilisation de la méthode
 </div>
 <p>Le code ci-dessus ne compile pas. En effet, on tente de passer en paramètre à la méthode
 <em>Vehicule.getPlusRapide</em> une liste de type <em>Voiture</em> alors que la méthode est écrite
-pour une liste de type <em>Vehicule</em>. Nous pourrions utiliser la redéfinition en fournissant
+pour une liste de type <em>Vehicule</em>. Nous pourrions utiliser la surcharge en fournissant
 une implémentation pour chaque type de liste, mais la bonne solution est de déclarer
 <em>Vehicule.getPlusRapide</em> comme une méthode générique :</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.cgi.poei</span><span class="o">;</span>
@@ -1339,7 +1354,7 @@ paramétré :</p>
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>Il n’est pas possible de redéfinir (<em>overload</em>) une méthode en ne changeant que
+<p>Il n’est pas possible de surcharger (<em>overload</em>) une méthode en ne changeant que
 le type paramétré d’un paramètre :</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
 
@@ -1374,7 +1389,7 @@ la classe suivante :</p>
 </div>
 <p class="last">Donc, le résultat de la compilation amènerait à déclarer une classe avec
 deux méthodes strictement identiques. Voilà pourquoi il n’est pas possible
-de redéfinir une méthode juste en changeant le type paramétré d’un paramètre.</p>
+de surcharger une méthode juste en changeant le type paramétré d’un paramètre.</p>
 </div>
 </div>
 </div>

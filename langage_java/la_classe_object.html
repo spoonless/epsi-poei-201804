@@ -226,7 +226,7 @@
 <li class="toctree-l3"><a class="reference internal" href="attributs_et_methodes.html#methodes-de-classe">Méthodes de classe</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="attributs_et_methodes.html#redefinition-de-methode-overloading">Redéfinition de méthode : overloading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="attributs_et_methodes.html#surcharge-de-methode-overloading">Surcharge de méthode : overloading</a></li>
 <li class="toctree-l2"><a class="reference internal" href="attributs_et_methodes.html#portee-des-noms-et-this">Portée des noms et this</a></li>
 <li class="toctree-l2"><a class="reference internal" href="attributs_et_methodes.html#principe-d-encapsulation">Principe d’encapsulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="attributs_et_methodes.html#exercice">Exercice</a></li>
@@ -276,7 +276,7 @@
 <li class="toctree-l1"><a class="reference internal" href="polymorphisme.html">Le polymorphisme</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="polymorphisme.html#principe-du-polymorphisme">Principe du polymorphisme</a></li>
 <li class="toctree-l2"><a class="reference internal" href="polymorphisme.html#une-exception-les-methodes-privees">Une exception : les méthodes privées</a></li>
-<li class="toctree-l2"><a class="reference internal" href="polymorphisme.html#surcharge-et-signature-de-methode">Surcharge et signature de méthode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="polymorphisme.html#redefinition-et-signature-de-methode">Redéfinition et signature de méthode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="polymorphisme.html#le-mot-cle-super">Le mot-clé super</a></li>
 <li class="toctree-l2"><a class="reference internal" href="polymorphisme.html#l-annotation-override">L’annotation &#64;Override</a></li>
 <li class="toctree-l2"><a class="reference internal" href="polymorphisme.html#les-methodes-de-classe">Les méthodes de classe</a></li>
@@ -602,6 +602,21 @@
 <li class="toctree-l2"><a class="reference internal" href="../javaee_web/jsf.html#pour-aller-plus-loin">Pour aller plus loin</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../javaee_web/jaxrs.html">Les API Web avec JAX-RS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../javaee_web/jaxrs.html#la-notion-de-ressource">La notion de ressource</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../javaee_web/jaxrs.html#configurer-une-application-web-pour-jax-rs">Configurer une application Web pour JAX-RS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../javaee_web/jaxrs.html#implementer-des-ressources-avec-jax-rs">Implémenter des ressources avec JAX-RS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../javaee_web/jaxrs.html#les-annotations-de-methodes">Les annotations de méthodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../javaee_web/jaxrs.html#parametre-dans-le-chemin-d-uri">Paramètre dans le chemin d’URI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../javaee_web/jaxrs.html#data-binding">Data binding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../javaee_web/jaxrs.html#generer-une-reponse">Générer une réponse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../javaee_web/jaxrs.html#gerer-des-exceptions">Gérer des exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../javaee_web/jaxrs.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../javaee_web/jaxrs.html#implementer-un-client-http">Implémenter un client HTTP</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">Java EE ORM</span></p>
 <ul>
@@ -866,7 +881,7 @@ d’héritage est un arbre dont la racine est la classe <a class="reference exte
 ne précise pas de classe parente dans la déclaration d’une classe, alors
 la classe hérite implicitement de <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a>.</p>
 <p>La classe <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> fournit des méthodes communes à toutes les classes. Certaines
-de ces méthodes doivent être surchargées dans les classes filles pour fonctionner
+de ces méthodes doivent être redéfinies dans les classes filles pour fonctionner
 correctement.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -927,7 +942,7 @@ si nous ajoutons la notion de plaque d’immatriculation à notre classe
 </div>
 <p>Alors l’attribut immatriculation introduit l’idée d’identification du véhicule.
 Il est donc judicieux de considérer que deux véhicules sont égaux s’ils
-ont la même immatriculation. Dans ce cas, il faut surcharger la méthode <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#equals-java.lang.Object-">equals</a>.</p>
+ont la même immatriculation. Dans ce cas, il faut redéfinir la méthode <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#equals-java.lang.Object-">equals</a>.</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.cgi.poei.conduite</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Vehicule</span> <span class="o">{</span>
@@ -1041,7 +1056,7 @@ avoir le même code de hachage.</p>
 <p>L’implémentation de cette méthode peut se révéler assez technique. En général,
 on se basera sur les attributs utilisés dans l’implémentation de la méthode
 <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#equals-java.lang.Object-">equals</a> pour en déduire le code de hachage.</p>
-<p>Cette méthode ne doit être surchargée que si cela est réellement utile.
+<p>Cette méthode ne doit être redéfinie que si cela est réellement utile.
 Par exemple si une instance de cette classe doit servir de clé pour une
 instance de <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html">HashMap</a>.</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.cgi.poei.conduite</span><span class="o">;</span>
@@ -1086,7 +1101,7 @@ de chaîne de caractères d’un objet. Elle est implicitement appelée par le
 compilateur lorsqu’on concatène une chaîne de caractères avec un objet.</p>
 <p>Par défaut l’implémentation de la méthode <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#toString--">toString</a> dans la classe <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a>
 retourne le type de l’objet suivi de &#64; suivi du code de hachage de l’objet.
-Il suffit de surcharger cette méthode pour obtenir la représentation souhaitée.</p>
+Il suffit de redéfinir cette méthode pour obtenir la représentation souhaitée.</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.cgi.poei.conduite</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Vehicule</span> <span class="o">{</span>
@@ -1118,7 +1133,7 @@ Il suffit de surcharger cette méthode pour obtenir la représentation souhaité
 <div class="section" id="la-methode-finalize">
 <h2>La méthode finalize<a class="headerlink" href="#la-methode-finalize" title="Lien permanent vers ce titre">¶</a></h2>
 <p>La méthode <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#finalize--">finalize</a> est appelée par le ramasse-miettes avant que l’objet ne soit
-supprimé et la mémoire récupérée. Surcharger cette méthode donne donc l’opportunité
+supprimé et la mémoire récupérée. Redéfinir cette méthode donne donc l’opportunité
 au développeur de déclencher un traitement avant que l’objet ne disparaisse.
 Cependant, nous avons déjà vu dans le chapitre sur le <a class="reference internal" href="cycle_de_vie.html#cycle-de-vie-finalize"><span class="std std-ref">cycle de vie</span></a>
 que le fonctionnement du ramasse-miettes ne donne aucune garantie sur le fait
@@ -1147,7 +1162,7 @@ faut fournir une nouvelle implémentation de la méthode <a class="reference ext
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>Par défaut, tous les tableaux implémentent l’interface <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html">Cloneable</a> et surchargent
+<p>Par défaut, tous les tableaux implémentent l’interface <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html">Cloneable</a> et redéfinissent
 la méthode <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#clone--">clone</a> afin de la rendre <strong>public</strong>. On peut donc directement cloner
 des tableaux en Java si on désire en obtenir une copie.</p>
 <div class="last highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="o">[]</span> <span class="n">tableau</span> <span class="o">=</span> <span class="o">{</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">};</span>

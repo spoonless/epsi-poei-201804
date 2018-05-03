@@ -226,7 +226,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../langage_java/attributs_et_methodes.html#methodes-de-classe">Méthodes de classe</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../langage_java/attributs_et_methodes.html#redefinition-de-methode-overloading">Redéfinition de méthode : overloading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../langage_java/attributs_et_methodes.html#surcharge-de-methode-overloading">Surcharge de méthode : overloading</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../langage_java/attributs_et_methodes.html#portee-des-noms-et-this">Portée des noms et this</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../langage_java/attributs_et_methodes.html#principe-d-encapsulation">Principe d’encapsulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../langage_java/attributs_et_methodes.html#exercice">Exercice</a></li>
@@ -276,7 +276,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../langage_java/polymorphisme.html">Le polymorphisme</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../langage_java/polymorphisme.html#principe-du-polymorphisme">Principe du polymorphisme</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../langage_java/polymorphisme.html#une-exception-les-methodes-privees">Une exception : les méthodes privées</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../langage_java/polymorphisme.html#surcharge-et-signature-de-methode">Surcharge et signature de méthode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../langage_java/polymorphisme.html#redefinition-et-signature-de-methode">Redéfinition et signature de méthode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../langage_java/polymorphisme.html#le-mot-cle-super">Le mot-clé super</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../langage_java/polymorphisme.html#l-annotation-override">L’annotation &#64;Override</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../langage_java/polymorphisme.html#les-methodes-de-classe">Les méthodes de classe</a></li>
@@ -602,6 +602,21 @@
 <li class="toctree-l2"><a class="reference internal" href="jsf.html#pour-aller-plus-loin">Pour aller plus loin</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="jaxrs.html">Les API Web avec JAX-RS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#la-notion-de-ressource">La notion de ressource</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#configurer-une-application-web-pour-jax-rs">Configurer une application Web pour JAX-RS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-des-ressources-avec-jax-rs">Implémenter des ressources avec JAX-RS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jaxrs.html#les-annotations-de-methodes">Les annotations de méthodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxrs.html#parametre-dans-le-chemin-d-uri">Paramètre dans le chemin d’URI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#data-binding">Data binding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#generer-une-reponse">Générer une réponse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#gerer-des-exceptions">Gérer des exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-un-client-http">Implémenter un client HTTP</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">Java EE ORM</span></p>
 <ul>
@@ -885,7 +900,7 @@ développer une application Web.</p>
 <p>Le conteneur Web gère le cycle de vie des servlets : la création,
 l’initialisation et la destruction. À chacune de ces étapes, une
 instance de servlet est informée par un appel à une méthode déclarée
-dans l’interface <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/Servlet.html">Servlet</a> et qui peut être surchargée pour chaque servlet.</p>
+dans l’interface <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/Servlet.html">Servlet</a> et qui peut être redéfinie pour chaque servlet.</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">(</span><span class="n">ServletConfig</span> <span class="n">config</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span> <span class="o">{</span>
   <span class="c1">// appelée au moment de l&#39;initialisation de la servlet</span>
 <span class="o">}</span>
@@ -926,7 +941,7 @@ l’implémentation à jeter une <code class="docutils literal notranslate"><spa
 le conteneur considère que la servlet n’a pas pu s’initialiser
 correctement et elle ne sera pas déployée dans le conteneur : elle ne
 sera donc pas accessible !</p>
-<p>Dans une servlet, il est préférable de surcharger la méthode :</p>
+<p>Dans une servlet, il est préférable de redéfinir la méthode :</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">ServletException</span> <span class="o">{</span>
 <span class="o">}</span>
 </pre></div>
