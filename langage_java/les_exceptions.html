@@ -347,7 +347,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="interface.html">Les interfaces</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="interface.html#declaration-d-un-interface">Déclaration d’un interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interface.html#declaration-d-une-interface">Déclaration d’une interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="interface.html#implementation-d-une-interface">Implémentation d’une interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="interface.html#attributs-et-methodes-statiques">Attributs et méthodes statiques</a></li>
 <li class="toctree-l2"><a class="reference internal" href="interface.html#heritage-d-interface">Héritage d’interface</a></li>
@@ -1321,7 +1321,7 @@ dans la sous-classe.</p>
 les méthodes en ne déclarant pas d’exception.</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.cgi.poei.heroes</span><span class="o">;</span>
 
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SuperHeros</span> <span class="kd">extends</span> <span class="n">Hero</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SuperHeros</span> <span class="kd">extends</span> <span class="n">Heros</span> <span class="o">{</span>
 
   <span class="nd">@Override</span>
   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">combattre</span><span class="o">(</span><span class="n">Vilain</span> <span class="n">vilain</span><span class="o">)</span> <span class="o">{</span>
@@ -1340,7 +1340,7 @@ les méthodes redéfinies à condition que ces types soient des classes filles
 des exceptions d’origine.</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.cgi.poei.heroes</span><span class="o">;</span>
 
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SuperHeros</span> <span class="kd">extends</span> <span class="n">Hero</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SuperHeros</span> <span class="kd">extends</span> <span class="n">Heros</span> <span class="o">{</span>
 
   <span class="nd">@Override</span>
   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">desamorcer</span><span class="o">(</span><span class="n">Piege</span> <span class="n">piege</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">PlanMachiaveliqueException</span> <span class="o">{</span>

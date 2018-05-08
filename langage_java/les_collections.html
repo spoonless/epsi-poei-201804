@@ -347,7 +347,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="interface.html">Les interfaces</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="interface.html#declaration-d-un-interface">Déclaration d’un interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interface.html#declaration-d-une-interface">Déclaration d’une interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="interface.html#implementation-d-une-interface">Implémentation d’une interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="interface.html#attributs-et-methodes-statiques">Attributs et méthodes statiques</a></li>
 <li class="toctree-l2"><a class="reference internal" href="interface.html#heritage-d-interface">Héritage d’interface</a></li>
@@ -886,16 +886,16 @@ l’API standard et disponibles pour la plupart dans le package <a class="refere
 Parmi ces collections, on trouve les listes (<em>lists</em>), les ensembles (<em>sets</em>) et
 les tableaux associatifs (<em>maps</em>). Elles forment ce que l’on appelle le
 <a class="reference external" href="https://docs.oracle.com/javase/8/docs/technotes/guides/collections/index.html">Java Collections Framework</a>.</p>
-<p>Toutes ces classes et interfaces sont génériques. Il n’est donc possible que de créer
+<p>Toutes ces classes et interfaces sont génériques. On ne peut donc créer que
 des collections d’objets. Si vous souhaitez créer une collection pour un type
 primitif, vous devez utiliser la classe enveloppe correspondante (par exemple
 <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html">Integer</a> pour <strong>int</strong>).</p>
 <div class="section" id="les-listes">
 <h2>Les listes<a class="headerlink" href="#les-listes" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Une liste est une collection ordonnée d’éléments. Il existe différentes façons
-d’implémenter des listes selon que l’on veut privilégier les performances pour
-les accès aléatoires aux éléments ou les opérations d’insertion et de suppression
-d’éléments dans la liste.</p>
+d’implémenter des listes dont les performances sont optimisées soit pour
+les accès aléatoires aux éléments soit pour les opérations d’insertion et de suppression
+d’éléments.</p>
 <p>Java propose plusieurs classes d’implémentation pour les listes selon les besoins
 de performance. Comme toutes ces classes implémentent des interfaces communes,
 il est conseillé de manipuler les instances de ces classes uniquement à travers
@@ -1180,7 +1180,7 @@ existe avant tout pour des raisons d’optimisation de parcours de liste.</dd>
 </div>
 <div class="section" id="les-ensembles-set">
 <h2>Les ensembles (set)<a class="headerlink" href="#les-ensembles-set" title="Lien permanent vers ce titre">¶</a></h2>
-<p>Les ensembles (<em>set</em>) sont des collections qui ne contiennent aucune doublon.
+<p>Les ensembles (<em>set</em>) sont des collections qui ne contiennent aucun doublon.
 Deux élements e1 et e2 sont des doublons si :</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">e1</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">e2</span><span class="o">)</span> <span class="o">==</span> <span class="kc">true</span>
 </pre></div>
