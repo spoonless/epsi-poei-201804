@@ -116,6 +116,22 @@
 </ul>
 </li>
 </ul>
+<p class="caption"><span class="caption-text">Introduction à Git</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../git/git.html">Git</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../git/git.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../git/git.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../git/git.html#initialisation-d-un-depot">Initialisation d’un dépôt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../git/git.html#suivi-des-modifications-du-depot">Suivi des modifications du dépôt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../git/git.html#validation-des-modifications">Validation des modifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../git/git.html#utilisation-d-un-depot-distant">Utilisation d’un dépôt distant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../git/git.html#exclusion-de-fichiers">Exclusion de fichiers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../git/git.html#git-hub">Git Hub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../git/git.html#references">Références</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../git/git.html#exercices">Exercices</a></li>
+</ul>
+</li>
+</ul>
 <p class="caption"><span class="caption-text">Le langage Java</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../langage_java/introduction.html">Introduction</a><ul>
@@ -673,7 +689,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#heritage-avec-jointure-de-tables">Héritage avec jointure de tables</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#heritage-avec-une-table-par-classe">Héritage avec une table par classe</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fusion-de-la-super-classe">Fusion de la super classe</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#exercice">Exercice</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="jpa_relations.html">Les relations avec JPA</a><ul>
@@ -1298,37 +1313,6 @@ qui peuvent être créées par les instructions suivantes :</p>
 <p>Contrairement au cas précédent, l’utilisation de <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/persistence/MappedSuperclass.html">&#64;MappedSuperclass</a> implique qu’il
 n’existe pas de relation entre les classes filles pour JPA. Comme la super classe
 n’est pas un entité, il n’est pas possible d’effectuer des requêtes sur la super classe.</p>
-</div>
-<div class="section" id="exercice">
-<h2>Exercice<a class="headerlink" href="#exercice" title="Lien permanent vers ce titre">¶</a></h2>
-<div class="topic">
-<p class="topic-title first">Gestion des examens</p>
-<p>On souhaite mettre en place un système de sauvegarde des notes aux examens des étudiants.</p>
-<p>Un résultat d’examen contient le code de l’examen, la date de passage et le nom de l’étudiant.
-Parmi les examens, on distingue :</p>
-<ul class="simple">
-<li>un contrôle pour lequel l’étudiant a une note sur 20</li>
-<li>un projet pour lequel l’étudiant a une note d’oral et d’écrit sur 10. La note du projet
-correspond à la somme de ces deux notes.</li>
-</ul>
-<p>Créez les entités et une classe Java permettant :</p>
-<ul class="simple">
-<li>d’ajouter un résultat d’un contrôle ou d’un projet dans une base de données.</li>
-<li>de récupérer la liste des objets contenant les notes d’un étudiant pour une période donnée</li>
-<li>de connaître la moyenne d’un étudiant</li>
-<li>de connaître la moyenne d’un contrôle ou d’un projet</li>
-</ul>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Une classe contenant des méthodes pour interagir avec la base de données
-est souvent qualifiée de DAO (<em>Data Access Object</em>).</p>
-</div>
-<div class="admonition-template-de-projet-jpa admonition">
-<p class="first admonition-title">Template de projet JPA</p>
-<p class="last">Vous pouvez <a class="reference download internal" href="../_downloads/template-orm.zip" download=""><code class="xref download docutils literal notranslate"><span class="pre">télécharger</span> <span class="pre">le</span> <span class="pre">projet</span> <span class="pre">d'exemple</span></code></a>.
-Il s’agit d’un projet Maven avec une dépendance vers Hibernate et le pilote JDBC MySQL.</p>
-</div>
-</div>
 </div>
 </div>
 
