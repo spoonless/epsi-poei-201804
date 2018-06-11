@@ -29,7 +29,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Recherche" href="../search.html" />
-    <link rel="next" title="Le protocole HTTP" href="../http/http.html" />
+    <link rel="next" title="JPA dans une application Web" href="jpa_webapp.html" />
     <link rel="prev" title="JDBC dans une application Web" href="jdbc_webapp.html" /> 
 
   
@@ -649,9 +649,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="jdbc.html#le-callablestatement">Le CallableStatement</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jdbc.html#la-transaction">La transaction</a><ul class="simple">
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="jdbc.html#la-transaction">La transaction</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="jpa_entites.html">Les entités JPA</a><ul>
@@ -706,7 +704,11 @@
 <li class="toctree-l1"><a class="reference internal" href="jdbc_webapp.html">JDBC dans une application Web</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="jdbc_webapp.html#declaration-d-une-datasource">Déclaration d’une DataSource</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jdbc_webapp.html#declaration-de-la-datasource-dans-le-fichier-web-xml">Déclaration de la DataSource dans le fichier web.xml</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jdbc_webapp.html#declaration-d-une-datasource-dans-wildfly">Déclaration d’une DataSource dans Wildfly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jdbc_webapp.html#declaration-d-une-datasource-dans-wildfly">Déclaration d’une DataSource dans Wildfly</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jdbc_webapp.html#deploiement-automatique-du-driver-mysql-methode-1">Déploiement automatique du driver MySQL (méthode 1)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jdbc_webapp.html#ajout-du-driver-mysql-comme-nouveau-module-methode-2">Ajout du driver MySQL comme nouveau module (méthode 2)</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Les EJB</a><ul>
@@ -719,7 +721,16 @@
 <li class="toctree-l2"><a class="reference internal" href="#ejb-session-stateless">EJB session stateless</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ejb-session-singleton">EJB session singleton</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#acces-a-un-ejb-session">Accès à un EJB session</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#la-gestion-des-transactions">La gestion des transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#la-gestion-des-transactions">La gestion des transactions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#jta-java-transaction-api">JTA (Java Transaction API)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#la-demarcation-transactionnelle">La démarcation transactionnelle</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jpa_webapp.html">JPA dans une application Web</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jpa_webapp.html#obtenir-un-entitymanager-dans-un-serveur-java-ee">Obtenir un EntityManager dans un serveur Java EE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jpa_webapp.html#jpa-et-jta">JPA et JTA</a></li>
 </ul>
 </li>
 </ul>
@@ -877,7 +888,7 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="../http/http.html" class="btn btn-neutral float-right" title="Le protocole HTTP" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="jpa_webapp.html" class="btn btn-neutral float-right" title="JPA dans une application Web" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="jdbc_webapp.html" class="btn btn-neutral" title="JDBC dans une application Web" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -1106,8 +1117,27 @@ attribut d’un autre composant Java EE (Servlet, bean CDI ou même EJB).</p>
 <p>Un service intéressant dans l’utilisation des EJB est la prise en charge
 du support transactionnel sur chacune de leur méthode. Il est ainsi
 possible de gérer automatiquement les transactions JTA (Java Transaction
-API) en utilisant un appel de méthode comme démarcation
-transactionnelle&nbsp;: lors de l’appel d’une méthode d’un EJB, le conteneur
+API).</p>
+<div class="section" id="jta-java-transaction-api">
+<span id="jta-ref"></span><h3>JTA (Java Transaction API)<a class="headerlink" href="#jta-java-transaction-api" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Le recours aux transactions ne se limite pas aux systèmes de base de données.
+N’importe quel service logiciel peut fournir un support à la transaction. Quand
+plusieurs systèmes transactionnels sont inclus au sein d’une même transaction,
+il peut être nécessaire d’avoir recours à une transaction distribuée pour les
+synchroniser.</p>
+<p>Pour ces raisons, Java EE fournit une API dédiée uniquement à la gestion des
+transactions : <strong>JTA</strong>. Cette API est indépendante de JDBC et elle est aussi plus
+complète (et donc plus compliquée). TomEE nous laisse le choix de gérer les
+transactions avec <strong>JTA</strong> ou avec JDBC pour les <em>DataSources</em>. Le paramètre
+<em>JtaManaged</em> disponible dans la balise <em>Resource</em> permet d’indiquer si l’on
+souhaite ou non qu’une <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a> soit gérable avec <strong>JTA</strong>.
+Nous reviendrons sur <strong>JTA</strong> lorsque nous parlerons de JPA et des EJB.</p>
+</div>
+<div class="section" id="la-demarcation-transactionnelle">
+<span id="demarcation-transactionnelle"></span><h3>La démarcation transactionnelle<a class="headerlink" href="#la-demarcation-transactionnelle" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Le conteneur EJB prend en charge les transactions JTA en utilisant
+un appel de méthode comme démarcation transactionnelle&nbsp;:
+lors de l’appel d’une méthode d’un EJB, le conteneur
 commence une transaction JTA et, au retour de la méthode, le conteneur
 effectue un commit ou un rollback.</p>
 <p>Deux annotations permettent de déclarer le support transactionnel pour
@@ -1213,6 +1243,7 @@ d’EJB.</p>
 </div>
 </div>
 </div>
+</div>
 
 
            </div>
@@ -1222,7 +1253,7 @@ d’EJB.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../http/http.html" class="btn btn-neutral float-right" title="Le protocole HTTP" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="jpa_webapp.html" class="btn btn-neutral float-right" title="JPA dans une application Web" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="jdbc_webapp.html" class="btn btn-neutral" title="JDBC dans une application Web" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

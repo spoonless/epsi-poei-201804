@@ -649,9 +649,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="jdbc.html#le-callablestatement">Le CallableStatement</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jdbc.html#la-transaction">La transaction</a><ul class="simple">
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="jdbc.html#la-transaction">La transaction</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="jpa_entites.html">Les entités JPA</a><ul>
@@ -706,7 +704,11 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">JDBC dans une application Web</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#declaration-d-une-datasource">Déclaration d’une DataSource</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#declaration-de-la-datasource-dans-le-fichier-web-xml">Déclaration de la DataSource dans le fichier web.xml</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#declaration-d-une-datasource-dans-wildfly">Déclaration d’une DataSource dans Wildfly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#declaration-d-une-datasource-dans-wildfly">Déclaration d’une DataSource dans Wildfly</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#deploiement-automatique-du-driver-mysql-methode-1">Déploiement automatique du driver MySQL (méthode 1)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ajout-du-driver-mysql-comme-nouveau-module-methode-2">Ajout du driver MySQL comme nouveau module (méthode 2)</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ejb.html">Les EJB</a><ul>
@@ -719,7 +721,16 @@
 <li class="toctree-l2"><a class="reference internal" href="ejb.html#ejb-session-stateless">EJB session stateless</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ejb.html#ejb-session-singleton">EJB session singleton</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ejb.html#acces-a-un-ejb-session">Accès à un EJB session</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ejb.html#la-gestion-des-transactions">La gestion des transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejb.html#la-gestion-des-transactions">La gestion des transactions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ejb.html#jta-java-transaction-api">JTA (Java Transaction API)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ejb.html#la-demarcation-transactionnelle">La démarcation transactionnelle</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jpa_webapp.html">JPA dans une application Web</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jpa_webapp.html#obtenir-un-entitymanager-dans-un-serveur-java-ee">Obtenir un EntityManager dans un serveur Java EE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jpa_webapp.html#jpa-et-jta">JPA et JTA</a></li>
 </ul>
 </li>
 </ul>
@@ -895,7 +906,7 @@
 bases données relationnelles en Java. Cette API peut être utilisée dans une
 application Web.</p>
 <div class="section" id="declaration-d-une-datasource">
-<h2>Déclaration d’une DataSource<a class="headerlink" href="#declaration-d-une-datasource" title="Lien permanent vers ce titre">¶</a></h2>
+<span id="datasource-ref"></span><h2>Déclaration d’une DataSource<a class="headerlink" href="#declaration-d-une-datasource" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Dans un serveur d’application, l’utilisation du <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/sql/DriverManager.html">DriverManager</a> JDBC est remplacée
 par celle de la <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a>. L’interface <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a> n’offre que deux méthodes :</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">// Attempts to establish a connection with the data source</span>
@@ -972,7 +983,7 @@ composant Java EE (comp) courant.</p>
 </div>
 </div>
 <div class="section" id="declaration-de-la-datasource-dans-le-fichier-web-xml">
-<h2>Déclaration de la DataSource dans le fichier web.xml<a class="headerlink" href="#declaration-de-la-datasource-dans-le-fichier-web-xml" title="Lien permanent vers ce titre">¶</a></h2>
+<span id="configuration-datasource"></span><h2>Déclaration de la DataSource dans le fichier web.xml<a class="headerlink" href="#declaration-de-la-datasource-dans-le-fichier-web-xml" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Le fichier de déploiement <code class="file docutils literal notranslate"><span class="pre">web.xml</span></code> doit déclarer la <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a> comme
 une ressource de l’application. Cela va permettre au serveur d’application
 de permettre à l’application de se connecter à la base de données associée.
@@ -998,17 +1009,129 @@ spécifiquement pour Wildfly.</p>
 <p>Une connexion JDBC est réalisée à travers un pilote. Pour déclarer une <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a>
 vers une base de données MySQL par exemple, nous devons installer le pilote
 MySQL dans le serveur.</p>
-<p>Vous pouvez télécharger le driver MySQL pour JDBC
+<p>Ce système de configuration est certes plus compliqué que l’utilisation du
+<a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/sql/DriverManager.html">DriverManager</a> mais il permet à l’application d’ignorer les détails de
+configuration. Généralement le développeur de l’application référence une <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a>
+et c’est l’administrateur du serveur qui configure la connexion de cette <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a>
+vers une base de données spécifiques.</p>
+<p>L’utilisation des <em>DataSources</em> dans un serveur d’application
+apporte également des fonctionnalités supplémentaires telles que la mise en
+cache et la réutilisation de connexions (pour améliorer les performances),
+les tests permettant de vérifier que les connexions sont correctement
+établies, la supervision des connexions…</p>
+<p>Pour ajouter ce pilote dans Wildfly, nous pouvons :</p>
+<ul class="simple">
+<li>soit laisser le serveur le faire grâce à une procédure de déploiement
+automatisé.</li>
+<li>soit ajouter un nouveau module dans le serveur</li>
+</ul>
+<p>Les sections suivantes décrivent respectivement ces méthodes. La première méthode
+est assez simple à réaliser et elle est donc recommandée pour commencer.
+La seconde, plus complexe, donne plus d’options de configuration à l’administrateur du serveur.</p>
+<div class="section" id="deploiement-automatique-du-driver-mysql-methode-1">
+<h3>Déploiement automatique du driver MySQL (méthode 1)<a class="headerlink" href="#deploiement-automatique-du-driver-mysql-methode-1" title="Lien permanent vers ce titre">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Vous pouvez télécharger le driver MySQL pour JDBC
 <a class="reference external" href="http://mvnrepository.com/artifact/mysql/mysql-connector-java">ici selon la version</a>.</p>
-<p>Pour ajouter ce pilote dans Wildfly, il faut créer un nouveau module dans le serveur.
+</div>
+<p>Pour déployer automatiquement le pilote MySQL dans Wildfly, il suffit de placer
+le fichier <em>jar</em> du pilote dans le répertoire <code class="file docutils literal notranslate"><span class="pre">standalone/deployments/</span></code>
+depuis le répertoire d’installation du serveur.</p>
+<p>Démarrez ensuite votre serveur et scrutez dans les logs de démarrage du serveur
+la trace qui indique le déploiement par le serveur. Pour MySQL, vous devriez avoir
+une ligne de log telle que :</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>09:51:40,222 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-4) WFLYJCA0018: Started Driver service with driver-name = mysql-connector-java-5.1.46.jar_com.mysql.jdbc.Driver_5_1
+</pre></div>
+</div>
+<p>Cette ligne (un peu longue) indique tout au bout le nom attribué automatiquement
+au driver par le serveur au démarrage. Pour l’exemple ci-dessus, le nom est
+<strong>mysql-connector-java-5.1.46.jar_com.mysql.jdbc.Driver_5_1</strong>. Mais attention
+ce nom peut être différent pour votre configuration.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Remarquez que le répertoire <code class="file docutils literal notranslate"><span class="pre">standalone/deployments/</span></code> dans lequel vous
+avez placé le driver de base de données contient également les fichiers <em>war</em>
+des applications que vous avez déjà déployées. Ce répertoire est scruté en
+permanence par le serveur et il déploie les modules qui sont copiés dedans.</p>
+</div>
+<p>Une fois, le pilote déployé automatiquement par le serveur, il est possible
+de déclarer la <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a> dans le fichier <code class="file docutils literal notranslate"><span class="pre">standalone/configuration/standalone.xml</span></code>.
+Au alentour de la ligne 140 dans ce fichier, on trouve la section de déclaration
+des pilotes de base de données et des sources de données :</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Ajout d’une source de données dans le fichier standalone.xml</span><a class="headerlink" href="#id4" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165</pre></div></td><td class="code"><div class="highlight"><pre><span></span>  <span class="nt">&lt;subsystem</span> <span class="na">xmlns=</span><span class="s">&quot;urn:jboss:domain:datasources:5.0&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;datasources&gt;</span>
+          <span class="nt">&lt;datasource</span> <span class="na">jndi-name=</span><span class="s">&quot;java:jboss/datasources/ExampleDS&quot;</span> <span class="na">pool-name=</span><span class="s">&quot;ExampleDS&quot;</span> <span class="na">enabled=</span><span class="s">&quot;true&quot;</span> <span class="na">use-java-context=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;connection-url&gt;</span>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE<span class="nt">&lt;/connection-url&gt;</span>
+              <span class="nt">&lt;driver&gt;</span>h2<span class="nt">&lt;/driver&gt;</span>
+              <span class="nt">&lt;security&gt;</span>
+                  <span class="nt">&lt;user-name&gt;</span>sa<span class="nt">&lt;/user-name&gt;</span>
+                  <span class="nt">&lt;password&gt;</span>sa<span class="nt">&lt;/password&gt;</span>
+              <span class="nt">&lt;/security&gt;</span>
+          <span class="nt">&lt;/datasource&gt;</span>
+<span class="hll">          <span class="nt">&lt;datasource</span> <span class="na">jta=</span><span class="s">&quot;true&quot;</span> <span class="na">jndi-name=</span><span class="s">&quot;java:/nomDeLaDataSource&quot;</span> <span class="na">pool-name=</span><span class="s">&quot;nomDeLaDataSource&quot;</span> <span class="na">enabled=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
+</span><span class="hll">              <span class="nt">&lt;connection-url&gt;</span>jdbc:mysql://[HOST]:[PORT]/[NOM SCHEMA]<span class="nt">&lt;/connection-url&gt;</span>
+</span><span class="hll">              <span class="nt">&lt;driver&gt;</span>mysql-connector-java-5.1.46.jar_com.mysql.jdbc.Driver_5_1<span class="nt">&lt;/driver&gt;</span>
+</span><span class="hll">              <span class="nt">&lt;security&gt;</span>
+</span><span class="hll">                  <span class="nt">&lt;user-name&gt;</span>[LOGIN]<span class="nt">&lt;/user-name&gt;</span>
+</span><span class="hll">                  <span class="nt">&lt;password&gt;</span>[PASSWORD]<span class="nt">&lt;/password&gt;</span>
+</span><span class="hll">              <span class="nt">&lt;/security&gt;</span>
+</span><span class="hll">          <span class="nt">&lt;/datasource&gt;</span>
+</span>          <span class="nt">&lt;drivers&gt;</span>
+              <span class="nt">&lt;driver</span> <span class="na">name=</span><span class="s">&quot;h2&quot;</span> <span class="na">module=</span><span class="s">&quot;com.h2database.h2&quot;</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;xa-datasource-class&gt;</span>org.h2.jdbcx.JdbcDataSource<span class="nt">&lt;/xa-datasource-class&gt;</span>
+              <span class="nt">&lt;/driver&gt;</span>
+          <span class="nt">&lt;/drivers&gt;</span>
+      <span class="nt">&lt;/datasources&gt;</span>
+  <span class="nt">&lt;/subsystem&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>À la ligne 153, on indique le driver de base de données à utiliser en donnant
+le nom du driver déployé automatiquement par le serveur.</p>
+</div>
+<div class="section" id="ajout-du-driver-mysql-comme-nouveau-module-methode-2">
+<h3>Ajout du driver MySQL comme nouveau module (méthode 2)<a class="headerlink" href="#ajout-du-driver-mysql-comme-nouveau-module-methode-2" title="Lien permanent vers ce titre">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Vous pouvez télécharger le driver MySQL pour JDBC
+<a class="reference external" href="http://mvnrepository.com/artifact/mysql/mysql-connector-java">ici selon la version</a>.</p>
+</div>
+<p>Pour ajouter le pilote MySQL dans Wildfly, nous pouvons créer un nouveau module dans le serveur.
 Pour cela, à partir du répertoire d’installation du serveur lui-même, placez
 le fichier <em>jar</em> du pilote dans le répertoire <code class="file docutils literal notranslate"><span class="pre">modules/system/layers/base/com/mysql/driver/main</span></code>.
 Créez les répertoires manquants si nécessaire.</p>
 <p>Créez ensuite le fichier <code class="file docutils literal notranslate"><span class="pre">module.xml</span></code> dans le répertoire
 <code class="file docutils literal notranslate"><span class="pre">modules/system/layers/base/com/mysql/driver/main</span></code>. Ce fichier doit pointer
 sur le fichier <em>jar</em> du pilote :</p>
-<div class="literal-block-wrapper docutils container" id="id4">
-<div class="code-block-caption"><span class="caption-text">Fichier module.xml</span><a class="headerlink" href="#id4" title="Lien permanent vers ce code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">Fichier module.xml</span><a class="headerlink" href="#id5" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39;?&gt;</span>
 <span class="nt">&lt;module</span> <span class="na">xmlns=</span><span class="s">&quot;urn:jboss:module:1.5&quot;</span> <span class="na">name=</span><span class="s">&quot;com.mysql.driver&quot;</span><span class="nt">&gt;</span>
   <span class="nt">&lt;resources&gt;</span>
@@ -1029,8 +1152,8 @@ sur le fichier <em>jar</em> du pilote :</p>
 de déclarer la <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a> dans le fichier <code class="file docutils literal notranslate"><span class="pre">standalone/configuration/standalone.xml</span></code>.
 Au alentour de la ligne 140 dans ce fichier, on trouve la section de déclaration
 des pilotes de base de données et des sources de données :</p>
-<div class="literal-block-wrapper docutils container" id="id5">
-<div class="code-block-caption"><span class="caption-text">ajout d’une source de données dans le fichier standalone.xml</span><a class="headerlink" href="#id5" title="Lien permanent vers ce code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">Ajout d’une source de données dans le fichier standalone.xml</span><a class="headerlink" href="#id6" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>141
 142
 143
@@ -1089,16 +1212,7 @@ des pilotes de base de données et des sources de données :</p>
 </pre></div>
 </td></tr></table></div>
 </div>
-<p>Ce système de configuration est certes plus compliqué que l’utilisation du
-<a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/sql/DriverManager.html">DriverManager</a> mais il permet à l’application d’ignorer les détails de
-configuration. Généralement le développeur de l’application référence une <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a>
-et c’est l’administrateur du serveur qui configure la connexion de cette <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a>
-vers une base de données spécifiques.</p>
-<p>L’utilisation des <em>DataSources</em> dans un serveur d’application
-apporte également des fonctionnalités supplémentaires telles que la mise en
-cache et la réutilisation de connexions (pour améliorer les performances),
-les tests permettant de vérifier que les connexions sont correctement
-établies, la supervision des connexions…</p>
+</div>
 </div>
 </div>
 
